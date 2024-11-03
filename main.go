@@ -100,7 +100,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	gene := *genePtr
+	gene := config.Gene
 	outputDir := config.OutputDir
 
 	// Create output directory if it doesn't exist
@@ -189,6 +189,12 @@ func runSetup() error {
 	}
 	config.SpeciesFile = speciesFile
 
+	// Prompt for gene region
+	fmt.Print("Enter gene region (leave blank to use the command line flag instead): ")
+	gene, _ := reader.ReadString('\n')
+	gene = strings.TrimSpace(gene)
+	config.Gene = gene
+
 	// Prompt for output directory
 	fmt.Print("Enter output directory [default: output]: ")
 	outputDir, _ := reader.ReadString('\n')
@@ -253,7 +259,7 @@ func processSpecies(species string, gene string, outputDir string, rateLimiter <
 
 	// Build the search query
 	// Exclude complete genomes and unverified sequences
-	query := fmt.Sprintf("%s[Organism] AND %s[Gene] NOT complete genome[Title] NOT unverified[Title]", species, gene)
+	query := fmt.Sprintf("%s[Organism] AND %s[Gene] NOT complete genome[Title] NOT partial genome[Title] NOT unverified[Title]", species, gene)
 
 	// Assemble the esearch URL
 	base := "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
