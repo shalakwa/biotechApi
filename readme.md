@@ -19,14 +19,19 @@ This project is a command-line tool for processing species data and gene regions
     ```sh
     go build -o biotechApi
     ```
+   
+or
+
+Copy the built binary from the `build` directory. (might be outdated)
+
 
 ## Usage
 
 ### Command-Line Arguments
 
 - `-speciesfile`: Path to the file containing species names.
-- `-species`: Species name.
-- `-gene`: Gene region (rbcL or matK) (required).
+- `-species`: Species name(Not needed if file is provided).
+- `-gene`: Gene region (rbcL or matK) (required, can be set in config).
 - `-outputdir`: Directory to store output files.
 - `-config`: Configuration file (default: config.json).
 - `--setup`: Run initial setup or reconfigure.
